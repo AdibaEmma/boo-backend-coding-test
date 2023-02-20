@@ -6,7 +6,7 @@ import {
   returnProfileById,
   fetchProfiles,
   updateProfileById,
-  deleteProfile,
+  deleteProfileById,
 } from "../controllers/profile.controller.js";
 import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
 
@@ -36,7 +36,7 @@ export const profileRoutes = () => {
 
   router.patch('/:profileId', updateProfileById)
 
-  router.delete('/profileId', deleteProfile)
+  router.delete('/profileId', deleteProfileById)
 
   return router;
 }

@@ -57,10 +57,10 @@ export const updateProfileById = async (req, res, next) => {
   }
 };
 
-export const deleteProfile = async (req, res, next) => {
+export const deleteProfileById = async (req, res, next) => {
   const query = { _id: req.params.profileId };
   try {
-    const result = await Profile.findOneAndDelete(query);
+    const result = await deleteProfile(query);
 
     if (!result || Object.keys(result || {}).length == 0) {
       return errorResponse(res, "Could not delete profile", 422);
