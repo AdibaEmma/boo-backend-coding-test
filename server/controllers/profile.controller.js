@@ -27,7 +27,7 @@ export const fetchProfiles = async (req, res, next) => {
   }
 };
 
-export const returnProfile = async (req, res, next) => {
+export const returnProfileById = async (req, res, next) => {
   try {
     const foundProfile = await getProfile({ _id: req.params.profileId });
     if (!foundProfile) {
