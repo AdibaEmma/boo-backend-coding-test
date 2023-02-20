@@ -6,7 +6,8 @@ const router = express.Router();
 const { createNewProfile, 
   returnProfile, 
   fetchProfiles,
-  updateProfile
+  updateProfile,
+  deleteProfile
  } = require('../controllers/profile.controller');
 const { profileValidationRules, validateProfile } = require('../middlewares/validators/profile.validator')
 

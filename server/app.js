@@ -1,10 +1,9 @@
-'use strict';
+import mongoose from 'mongoose';
+import express from 'express';
+import http from 'http'
+import { config } from './config/common.config';
+import { Logging } from './utils/logging'
 
-const mongoose = require('mongoose')
-const express = require('express');
-const http = require('http')
-const { config } = require('./config/common.config')
-const Logging = require('./utils/logging')
 const app = express();
 
 

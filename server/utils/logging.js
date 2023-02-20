@@ -1,7 +1,6 @@
-'use strict'
-const chalk = require('chalk')
+import chalk from 'chalk'
 
-module.exports = class Logging {
+export default class Logging {
     static log = (args) => this.info(args);
 
     static info = (args) => console.log(chalk.green(`[${new Date().toLocaleString()}] [INFO] `), typeof args === 'string' ? chalk.blueBright(args) : args);

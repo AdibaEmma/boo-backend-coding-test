@@ -1,11 +1,10 @@
-const { query } = require("express");
 const Profile = require("../models/Profile");
+const { saveProfile } = require('../service/profile.service')
 const { errorResponse, successResponse } = require("../utils/server-response");
 
 const createNewProfile = async (req, res, next) => {
   try {
-    const profile = new Profile({ ...req.body });
-    await profile.save();
+    const newProfile = await addProfile(req.body)
     res.status(201).send(profile);
   } catch (err) {
     res.status(400).send(err);
@@ -51,9 +50,25 @@ const updateProfile = async (req, res, next) => {
         return errorResponse(res, error.message);
     }
 }
+
+const deleteProfile = async (req, res, next) => {
+    const query = { _id: req.params.profileId };
+    try {
+        const result = await Profile.findOneAndDelete(query);
+
+        if (!result || Object.keys(result || {}).length == 0) {
+          return errorResponse(res, "Could not delete profile", 422);
+        }
+
+        return successResponse(res, {}, "User account deleted", 200);
+    } catch (error) {
+        return errorResponse(res, error.message);
+    }
+}
 module.exports = {
   createNewProfile,
   returnProfile,
   fetchProfiles,
-  updateProfile
+  updateProfile,
+  deleteProfile
 };
