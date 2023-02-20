@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createNewProfile } = require('../controllers/profile.controller');
+const { createNewProfile, returnProfile, fetchProfiles } = require('../controllers/profile.controller');
 const { profileValidationRules, validateProfile } = require('../middlewares/validators/profile.validator')
 
 const profiles = [
@@ -26,11 +26,9 @@ module.exports = function() {
 
   router.post('/', profileValidationRules(), validateProfile, createNewProfile)
 
-  router.get('/{profileId}', function(req, res, next) {
-    res.render('profile_template', {
-      profile: profiles[0],
-    });
-  });
+  router.get('/', fetchProfiles)
+
+  router.get('/:profileId', returnProfile);
 
   return router;
 }
