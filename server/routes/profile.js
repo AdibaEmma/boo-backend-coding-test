@@ -3,7 +3,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { createNewProfile, returnProfile, fetchProfiles } = require('../controllers/profile.controller');
+const { createNewProfile, 
+  returnProfile, 
+  fetchProfiles,
+  updateProfile
+ } = require('../controllers/profile.controller');
 const { profileValidationRules, validateProfile } = require('../middlewares/validators/profile.validator')
 
 const profiles = [
@@ -29,6 +33,10 @@ module.exports = function() {
   router.get('/', fetchProfiles)
 
   router.get('/:profileId', returnProfile);
+
+  router.patch('/:profileId', updateProfile)
+
+  router.delete('/profileId', deleteProfile)
 
   return router;
 }

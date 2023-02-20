@@ -1,3 +1,4 @@
+const { query } = require("express");
 const Profile = require("../models/Profile");
 const { errorResponse, successResponse } = require("../utils/server-response");
 
@@ -38,8 +39,21 @@ const returnProfile = async (req, res, next) => {
   }
 };
 
+const updateProfile = async (req, res, next) => {
+    const query = { _id: req.params.profileId}
+    try {
+        const { acknowledged } = await Profile.updateOne(query, req.body, options = {});
+        if (!acknowledged) {
+          return errorResponse(res, "Update not successful", 400);
+        }
+         return successResponse(res, {}, "Update successful", 200);
+    } catch (error) {
+        return errorResponse(res, error.message);
+    }
+}
 module.exports = {
   createNewProfile,
   returnProfile,
   fetchProfiles,
+  updateProfile
 };
