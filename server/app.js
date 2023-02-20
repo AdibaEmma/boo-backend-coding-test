@@ -2,7 +2,9 @@
 
 const mongoose = require('mongoose')
 const express = require('express');
+const http = require('http')
 const { config } = require('./config/common.config')
+const Logging = require('./utils/logging')
 const app = express();
 
 
@@ -24,7 +26,10 @@ mongoose.connect(config.mongo.uri, {
   app.use("/", require("./routes/profile")());
 
   // start server
-  const server = app.listen(config.server.port);
+   http.createServer(app).listen(config.server.port, () => {
+     Logging.info(`Server running on port ${config.server.port}`);
+     Logging.info(`Open app on http://localhost:${config.server.port}/`);
+   });
   console.log("Express started. Listening on %s", config.server.port);
 })
 .catch((error) => {
