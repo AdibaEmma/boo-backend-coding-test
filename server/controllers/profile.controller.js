@@ -1,5 +1,6 @@
 import { Profile } from "../models/Profile.js";
 import { addProfile } from "../services/profiles/addProfile.js";
+import { findProfiles } from "../services/profiles/findProfiles.js";
 import { getProfile } from "../services/profiles/getProfile.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
@@ -18,7 +19,7 @@ export const createNewProfile = async (req, res, next) => {
 
 export const fetchProfiles = async (req, res, next) => {
   try {
-    const profiles = await Profile.find({}).exec();
+    const profiles = await findProfiles()
 
     return successResponse(res, { profiles }, "Returned profiles", 200);
   } catch (error) {
