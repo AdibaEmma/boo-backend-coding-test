@@ -1,3 +1,4 @@
+const Profile = require('../models/Profile')
 const createNewProfile = async (req, res, next) => {
     try {
       const profile = new Profile({...req.body });
@@ -6,4 +7,8 @@ const createNewProfile = async (req, res, next) => {
     } catch (err) {
       res.status(400).send(err);
     }
+}
+
+module.exports = {
+    createNewProfile
 }
