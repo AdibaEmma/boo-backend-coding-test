@@ -5,9 +5,13 @@ import { errorResponse, successResponse } from "../utils/server-response.js";
 export const createNewProfile = async (req, res, next) => {
   try {
     const newProfile = await addProfile(req.body)
-    res.status(201).send(profile);
-  } catch (err) {
-    res.status(400).send(err);
+    if(!newProfile) {
+        return errorResponse(res, "Could not create profile", 400)
+    }
+
+    return successResponse(res, { newProfile }, "New profile added", 201)
+  } catch (error) {
+    return errorResponse(res, error.message)
   }
 };
 
@@ -15,7 +19,7 @@ export const fetchProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find({}).exec();
 
-    return successResponse(res, profiles, "Returned profiles", 200);
+    return successResponse(res, { profiles }, "Returned profiles", 200);
   } catch (error) {
     return errorResponse(res, error.message);
   }
