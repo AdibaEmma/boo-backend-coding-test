@@ -1,8 +1,8 @@
-const Profile = require("../models/Profile");
-const { saveProfile } = require('../service/profile.service')
-const { errorResponse, successResponse } = require("../utils/server-response");
+import { Profile } from "../models/Profile.js";
+import { saveProfile } from '../service/profile.service.js'
+import { errorResponse, successResponse } from "../utils/server-response.js";
 
-const createNewProfile = async (req, res, next) => {
+export const createNewProfile = async (req, res, next) => {
   try {
     const newProfile = await addProfile(req.body)
     res.status(201).send(profile);
@@ -11,7 +11,7 @@ const createNewProfile = async (req, res, next) => {
   }
 };
 
-const fetchProfiles = async (req, res, next) => {
+export const fetchProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find({}).exec();
 
@@ -21,7 +21,7 @@ const fetchProfiles = async (req, res, next) => {
   }
 };
 
-const returnProfile = async (req, res, next) => {
+export const returnProfile = async (req, res, next) => {
   try {
     const foundProfile = await Profile.findOne({
       _id: req.params.profileId,
@@ -38,7 +38,7 @@ const returnProfile = async (req, res, next) => {
   }
 };
 
-const updateProfile = async (req, res, next) => {
+export const updateProfile = async (req, res, next) => {
     const query = { _id: req.params.profileId}
     try {
         const { acknowledged } = await Profile.updateOne(query, req.body, options = {});
@@ -51,7 +51,7 @@ const updateProfile = async (req, res, next) => {
     }
 }
 
-const deleteProfile = async (req, res, next) => {
+export const deleteProfile = async (req, res, next) => {
     const query = { _id: req.params.profileId };
     try {
         const result = await Profile.findOneAndDelete(query);
@@ -65,10 +65,3 @@ const deleteProfile = async (req, res, next) => {
         return errorResponse(res, error.message);
     }
 }
-module.exports = {
-  createNewProfile,
-  returnProfile,
-  fetchProfiles,
-  updateProfile,
-  deleteProfile
-};

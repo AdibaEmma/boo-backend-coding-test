@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import http from 'http'
-import { config } from './config/common.config';
-import { Logging } from './utils/logging'
+import { config } from './config/config.js';
+import Logging from './utils/logging.js'
+import { profileRoutes } from './routes/profile.js'
 
 const app = express();
 
@@ -22,7 +23,7 @@ mongoose.connect(config.mongo.uri, {
   app.use(express.json());
 
   // routes
-  app.use("/profiles", require("./routes/profile")());
+  app.use("/profiles", profileRoutes());
 
   // start server
    http.createServer(app).listen(config.server.port, () => {

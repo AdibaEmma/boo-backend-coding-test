@@ -1,4 +1,4 @@
-const dotenv = require("dotenv");
+import dotenv from 'dotenv'
 
 dotenv.config();
 
@@ -11,7 +11,7 @@ const MONGO_USERNAME = process.env.MONGO_USERNAME || '';
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD || '';
 const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@renteasecluster.fkbqbzj.mongodb.net/${DB_NAME}`;
 
-exports.config = {
+export const config = {
   mongo: {
     uri: MONGO_URI,
     options: {

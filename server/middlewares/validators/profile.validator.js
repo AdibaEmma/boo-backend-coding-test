@@ -1,6 +1,6 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult }  from "express-validator";
 
-const profileValidationRules = () => {
+export const profileValidationRules = () => {
     return [
       body("name")
         .trim()
@@ -21,7 +21,7 @@ const profileValidationRules = () => {
 }
 
 
-const validateProfile = (req, res, next) => {
+export const validateProfile = (req, res, next) => {
   const result = validationResult(req).formatWith(errorFormatter);
 
   if (result.isEmpty()) {
@@ -42,8 +42,3 @@ const errorFormatter = ({
 
   return `${msg}`;
 };
-
-module.exports = {
-    profileValidationRules,
-    validateProfile
-}

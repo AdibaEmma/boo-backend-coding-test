@@ -1,15 +1,13 @@
-'use strict';
+import { Router } from "express";
+const router = Router();
 
-const express = require('express');
-const router = express.Router();
-
-const { createNewProfile, 
+import{ createNewProfile, 
   returnProfile, 
   fetchProfiles,
   updateProfile,
   deleteProfile
- } = require('../controllers/profile.controller');
-const { profileValidationRules, validateProfile } = require('../middlewares/validators/profile.validator')
+ }  from '../controllers/profile.controller.js';
+import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
 
 const profiles = [
   {
@@ -27,7 +25,7 @@ const profiles = [
   }
 ];
 
-module.exports = function() {
+export const profileRoutes = () => {
 
   router.post('/', profileValidationRules(), validateProfile, createNewProfile)
 

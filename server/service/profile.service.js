@@ -1,10 +1,6 @@
-const Profile = require("../models/Profile");
+import { Profile } from "../models/Profile.js";
 
-const saveProfile = async (input) => {
+export const saveProfile = async (input) => {
     return await Profile.create(input);
 }
 
-
-module.exports = {
-    saveProfile
-}
