@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
+    "start:dev": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^5.0.1",
+    "mongodb-memory-server": "^8.11.4"
+  },
+  "devDependencies": {
+    "express-validator": "^6.15.0",
+    "nodemon": "^2.0.20"
   }
 }
