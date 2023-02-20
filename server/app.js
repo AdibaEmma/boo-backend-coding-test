@@ -1,15 +1,33 @@
 'use strict';
 
+const mongoose = require('mongoose')
 const express = require('express');
+const { config } = require('./config/common.config')
 const app = express();
-const port =  process.env.PORT || 3000;
 
-// set the view engine to ejs
-app.set('view engine', 'ejs');
 
-// routes
-app.use('/', require('./routes/profile')());
+mongoose.set("strictQuery", true);
+mongoose.connect(config.mongo.uri, {
+  retryWrites: true,
+  w: "majority",
+  autoIndex: false,
+})
+.then(() => {
+  console.log("Database connected");
+  // set the view engine to ejs
+  app.set("view engine", "ejs");
 
-// start server
-const server = app.listen(port);
-console.log('Express started. Listening on %s', port);
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+
+  // routes
+  app.use("/", require("./routes/profile")());
+
+  // start server
+  const server = app.listen(config.server.port);
+  console.log("Express started. Listening on %s", config.server.port);
+})
+.catch((error) => {
+    console.log(error.message)
+});
+
