@@ -21,6 +21,8 @@ const profiles = [
 
 module.exports = function() {
 
+  router.post('/profiles')
+
   router.get('/*', function(req, res, next) {
     res.render('profile_template', {
       profile: profiles[0],
