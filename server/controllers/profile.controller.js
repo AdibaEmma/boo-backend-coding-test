@@ -2,6 +2,7 @@ import { Profile } from "../models/Profile.js";
 import { addProfile } from "../services/profiles/addProfile.js";
 import { findProfiles } from "../services/profiles/findProfiles.js";
 import { getProfile } from "../services/profiles/getProfile.js";
+import { updateProfile } from "../services/profiles/updateProfile.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
 export const createNewProfile = async (req, res, next) => {
@@ -19,7 +20,7 @@ export const createNewProfile = async (req, res, next) => {
 
 export const fetchProfiles = async (req, res, next) => {
   try {
-    const profiles = await findProfiles()
+    const profiles = await findProfiles();
 
     return successResponse(res, { profiles }, "Returned profiles", 200);
   } catch (error) {
@@ -42,14 +43,11 @@ export const returnProfileById = async (req, res, next) => {
   }
 };
 
-export const updateProfile = async (req, res, next) => {
+export const updateProfileById = async (req, res, next) => {
   const query = { _id: req.params.profileId };
   try {
-    const { acknowledged } = await Profile.updateOne(
-      query,
-      req.body,
-      (options = {})
-    );
+    const acknowledged = await updateProfile(query, req.body);
+
     if (!acknowledged) {
       return errorResponse(res, "Update not successful", 400);
     }

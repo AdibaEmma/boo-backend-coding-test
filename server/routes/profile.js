@@ -1,12 +1,13 @@
 import { Router } from "express";
 const router = Router();
 
-import{ createNewProfile, 
-  returnProfile, 
+import {
+  createNewProfile,
+  returnProfileById,
   fetchProfiles,
-  updateProfile,
-  deleteProfile
- }  from '../controllers/profile.controller.js';
+  updateProfileById,
+  deleteProfile,
+} from "../controllers/profile.controller.js";
 import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
 
 const profiles = [
@@ -31,9 +32,9 @@ export const profileRoutes = () => {
 
   router.get('/', fetchProfiles)
 
-  router.get('/:profileId', returnProfile);
+  router.get("/:profileId", returnProfileById);
 
-  router.patch('/:profileId', updateProfile)
+  router.patch('/:profileId', updateProfileById)
 
   router.delete('/profileId', deleteProfile)
 
