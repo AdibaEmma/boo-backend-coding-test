@@ -15,7 +15,7 @@ mongoose.connect(config.mongo.uri, {
   autoIndex: false,
 })
 .then(() => {
-  console.log("Database connected");
+  Logging.info("Database connected");
   // set the view engine to ejs
   app.set("view engine", "ejs");
 
@@ -30,7 +30,6 @@ mongoose.connect(config.mongo.uri, {
      Logging.info(`Server running on port ${config.server.port}`);
      Logging.info(`Open app on http://localhost:${config.server.port}/`);
    });
-  console.log("Express started. Listening on %s", config.server.port);
 })
 .catch((error) => {
     console.log(error.message)

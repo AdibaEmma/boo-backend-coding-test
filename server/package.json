@@ -20,7 +20,7 @@
     "mongoose": "^6.9.2"
   },
   "devDependencies": {
-    "chalk": "^5.2.0",
+    "chalk": "^4.1.2",
     "express-validator": "^6.15.0",
     "nodemon": "^2.0.20"
   }
