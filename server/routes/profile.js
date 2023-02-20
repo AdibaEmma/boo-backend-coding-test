@@ -24,9 +24,9 @@ const profiles = [
 
 module.exports = function() {
 
-  router.post('/profiles', profileValidationRules(), validateProfile, createNewProfile)
+  router.post('/', profileValidationRules(), validateProfile, createNewProfile)
 
-  router.get('/*', function(req, res, next) {
+  router.get('/{profileId}', function(req, res, next) {
     res.render('profile_template', {
       profile: profiles[0],
     });

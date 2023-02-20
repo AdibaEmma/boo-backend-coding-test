@@ -23,7 +23,7 @@ mongoose.connect(config.mongo.uri, {
   app.use(express.json());
 
   // routes
-  app.use("/", require("./routes/profile")());
+  app.use("/profiles", require("./routes/profile")());
 
   // start server
    http.createServer(app).listen(config.server.port, () => {
