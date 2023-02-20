@@ -1,5 +1,6 @@
 import { Profile } from "../models/Profile.js";
 import { addProfile } from "../services/profiles/addProfile.js";
+import { getProfile } from "../services/profiles/getProfile.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
 export const createNewProfile = async (req, res, next) => {
@@ -27,9 +28,7 @@ export const fetchProfiles = async (req, res, next) => {
 
 export const returnProfile = async (req, res, next) => {
   try {
-    const foundProfile = await Profile.findOne({
-      _id: req.params.profileId,
-    }).exec();
+    const foundProfile = await getProfile({ _id: req.params.profileId });
     if (!foundProfile) {
       return errorResponse(res, "Profile not found", 404);
     }
