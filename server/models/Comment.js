@@ -12,6 +12,17 @@ const commentSchema = new Schema(
       required: true,
     },
     likes: [{ type: Schema.Types.ObjectId }],
+    votes: {
+      mbti: {
+        type: String
+      },
+      enneagram: {
+        type: String
+      },
+      zodiac: {
+        type: String
+      }
+    }
   },
   {
     timestamps: true,
