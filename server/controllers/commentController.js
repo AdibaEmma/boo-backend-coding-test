@@ -21,6 +21,10 @@ export const postComment = async (req, res, next) => {
     }
 }
 
+export const returnAllCommentsByUSer = async (req, res, next) => {
+    
+}
+
 export const returnCommentById = async (req, res, next) => {
     const commentId = req.params.commentId
     try {
