@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const commentSchema = new Schema({
   profileId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
   },
   text: {
