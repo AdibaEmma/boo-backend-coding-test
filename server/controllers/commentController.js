@@ -2,18 +2,18 @@ import { ObjectId } from "mongodb";
 import { addComment } from "../services/comments/addComment.js";
 import { findComments } from "../services/comments/findComments.js";
 import { getComment } from "../services/comments/getComment.js";
-import { getProfile } from "../services/profiles/getProfile.js"
+import { getUser } from "../services/users/getUser.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
 export const postComment = async (req, res, next) => {
-    const profileId = req.params.profileId
+    const userId = req.params.userId;
     const { text } = req.body
     try {
-        const profile = await getProfile({ _id: profileId });
-        if(!profile) {
+        const user = await getUser({ _id: userId });
+        if(!user) {
             return errorResponse(res, "Profile not found", 404)
         }
-        const newComment = await addComment(profile._id, text)
+        const newComment = await addComment(user._id, text)
 
         return successResponse(res, { newComment }, "New comment added", 201)
 
