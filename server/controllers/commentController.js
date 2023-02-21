@@ -139,3 +139,26 @@ export const voteCommentEnneagram = async (req, res, next) => {
     return errorResponse(res, error.message);
   }
 };
+
+export const voteCommentZodiac = async (req, res, next) => {
+  const commentId = req.params.commentId;
+  const { commentZodiac } = req.body;
+  try {
+    const comment = await getComment({ _id: commentId });
+    if (!comment) {
+      return errorResponse(res, "Comment not found", 404);
+    }
+
+    const zodiacVoteCasted = await voteEnneagram(
+      { _id: commentId },
+      commentZodiac
+    );
+    if (!zodiacVoteCasted) {
+      return errorResponse(res, "Could not cast vote");
+    }
+
+    return successResponse(res, {}, "Comment zodiac vote updated");
+  } catch (error) {
+    return errorResponse(res, error.message);
+  }
+};
