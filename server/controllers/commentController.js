@@ -6,6 +6,7 @@ import { likeComment } from "../services/comments/likeComment.js";
 import { unlikeComment } from "../services/comments/unlikeComment.js";
 import { voteEnneagram } from "../services/comments/voteEnneagram.js";
 import { voteMbti } from "../services/comments/voteMbti.js";
+import { voteZodiac } from "../services/comments/voteZodiac.js";
 import { getUser } from "../services/users/getUser.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
@@ -149,10 +150,11 @@ export const voteCommentZodiac = async (req, res, next) => {
       return errorResponse(res, "Comment not found", 404);
     }
 
-    const zodiacVoteCasted = await voteEnneagram(
+    const zodiacVoteCasted = await voteZodiac(
       { _id: commentId },
       commentZodiac
     );
+
     if (!zodiacVoteCasted) {
       return errorResponse(res, "Could not cast vote");
     }
