@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { Comment } from "../../src/models/Comment";
 import { addComment } from "../../src/services/comments/addComment";
+import { findComments } from "../../src/services/comments/findComments";
+import { likeComment } from "../../src/services/comments/likeComment";
+import { jest } from "@jest/globals";
 
 const mongoServer = await MongoMemoryServer.create();
 
@@ -23,6 +26,62 @@ describe("Comment Service", () => {
       expect(comment).toBeInstanceOf(Comment);
       expect(comment.userId).toEqual(userId);
       expect(comment.text).toEqual(text);
+    });
+  });
+
+  describe("findComments", () => {
+   it("returns an array of comments sorted by createdAt in descending order", async () => {
+    const userId = new mongoose.Types.ObjectId();
+    const text = "This is a test comment";
+
+    const comment = await addComment(userId, text);
+
+      const filterQuery = { userId };
+      const sortBy = "createdAt";
+
+      const result = await findComments(filterQuery, sortBy);
+
+      expect(Array.isArray(result)).toBe(true);
+      expect(result.length).toBeGreaterThan(0);
+      expect(result[0].createdAt).toBeInstanceOf(Date);
+
+      for (let i = 1; i < result.length; i++) {
+        const prev = result[i - 1];
+        const current = result[i];
+        expect(prev.createdAt).toBeGreaterThanOrEqual(current.createdAt);
+      }
+    });
+  });
+
+  describe("likeComment", () => {
+    let comment;
+    const userId = new mongoose.Types.ObjectId();;
+
+    beforeEach(() => {
+      // create a mock comment object with empty likes array
+      comment = {
+        likes: [],
+        save: jest.fn(),
+      };
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should add user to comment likes if not already liked", async () => {
+      const result = await likeComment(comment, userId);
+      expect(result).toBe(1); // expected number of likes after adding user
+      expect(comment.likes).toEqual([userId]);
+      expect(comment.save).toHaveBeenCalled();
+    });
+
+    it("should not add user to comment likes if already liked", async () => {
+      comment.likes.push(userId);
+      const result = await likeComment(comment, userId);
+      expect(result).toBe(1); // expected number of likes should not change
+      expect(comment.likes).toEqual([userId]);
+      expect(comment.save).not.toHaveBeenCalled();
     });
   });
 });

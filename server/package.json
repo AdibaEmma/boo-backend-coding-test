@@ -4,6 +4,10 @@
   "description": "",
   "main": "app.js",
   "type": "module",
+  "jest": {
+    "testEnvironment": "jest-environment-node",
+    "transform": {}
+  },
   "scripts": {
     "start": "node app",
     "start:dev": "nodemon app",
