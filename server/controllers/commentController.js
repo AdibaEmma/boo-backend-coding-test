@@ -4,6 +4,7 @@ import { findComments } from "../services/comments/findComments.js";
 import { getComment } from "../services/comments/getComment.js";
 import { likeComment } from "../services/comments/likeComment.js";
 import { unlikeComment } from "../services/comments/unlikeComment.js";
+import { voteEnneagram } from "../services/comments/voteEnneagram.js";
 import { voteMbti } from "../services/comments/voteMbti.js";
 import { getUser } from "../services/users/getUser.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
@@ -115,3 +116,26 @@ export const voteCommentMbti = async (req, res, next) => {
         return errorResponse(res, error.message);
     }
 }
+
+export const voteCommentEnneagram = async (req, res, next) => {
+  const commentId = req.params.commentId;
+  const { commentEnneagram } = req.body;
+  try {
+    const comment = await getComment({ _id: commentId });
+    if (!comment) {
+      return errorResponse(res, "Comment not found", 404);
+    }
+
+    const enneagramVoteCasted = await voteEnneagram(
+      { _id: commentId },
+      commentEnneagram
+    );
+    if (!enneagramVoteCasted) {
+      return errorResponse(res, "Could not cast vote");
+    }
+
+    return successResponse(res, {}, "Comment enneagram vote updated");
+  } catch (error) {
+    return errorResponse(res, error.message);
+  }
+};
