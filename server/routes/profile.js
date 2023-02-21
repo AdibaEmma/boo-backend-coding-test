@@ -10,7 +10,7 @@ import {
 } from "../controllers/profileController.js";
 
 import { postComment, returnAllCommentsByUSer } from "../controllers/commentController.js";
-import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
+import { profileValidationRules, validateProfile } from '../middlewares/validators/profileValidator.js'
 
 const profiles = [
   {

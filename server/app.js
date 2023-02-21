@@ -5,6 +5,7 @@ import { config } from './config/config.js';
 import Logging from './utils/logging.js'
 import { profileRoutes } from './routes/profile.js'
 import { commentRoutes } from './routes/comment.js';
+import { userRoutes } from './routes/user.js';
 
 const app = express();
 
@@ -25,7 +26,8 @@ mongoose.connect(config.mongo.uri, {
 
   // routes
   app.use("/profiles", profileRoutes());
-  app.use("/comments", commentRoutes())
+  app.use("/comments", commentRoutes());
+  app.use("/users", userRoutes());
 
   // start server
    http.createServer(app).listen(config.server.port, () => {
