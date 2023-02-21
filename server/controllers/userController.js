@@ -1,5 +1,5 @@
-import { createUser } from "../services/users/createUser";
-import { errorResponse, successResponse } from "../utils/server-response";
+import { createUser } from "../services/users/createUser.js";
+import { errorResponse, successResponse } from "../utils/server-response.js";
 
 export const createUser = async (req, res, next) => {
   try {
