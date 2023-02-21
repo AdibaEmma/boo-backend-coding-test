@@ -3,19 +3,15 @@ const { Schema, model } = mongoose;
 
 const commentSchema = new Schema(
   {
-    profileId: {
+    userId: {
       type: Schema.Types.ObjectId,
-      ref: 'Profile',
       required: true,
     },
     text: {
       type: String,
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [{ type: Schema.Types.ObjectId }],
   },
   {
     timestamps: true,
