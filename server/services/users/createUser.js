@@ -1,6 +1,6 @@
 import { User } from "../../models/User";
 
-export const createAuthor = async (userDetails) => {
+export const createUser = async (userDetails) => {
   const newUser = await User.create(userDetails);
   return newUser;
 };
