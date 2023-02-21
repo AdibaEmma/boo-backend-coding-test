@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { addComment } from "../services/comments/addComment.js";
+import { findComments } from "../services/comments/findComments.js";
 import { getComment } from "../services/comments/getComment.js";
 import { getProfile } from "../services/profiles/getProfile.js"
 import { errorResponse, successResponse } from "../utils/server-response.js";
@@ -22,7 +23,18 @@ export const postComment = async (req, res, next) => {
 }
 
 export const returnAllCommentsByUSer = async (req, res, next) => {
-    
+    const profileId = req.params.profileId
+    const { sortBy } = req.query
+    try {
+        const filteredComments = await findComments(
+          { profileId },
+          sortBy
+        );
+
+        return successResponse(res, { filteredComments }, "Return filtered comments", 200)
+    } catch (error) {
+        return errorResponse(res, error.message)
+    }
 }
 
 export const returnCommentById = async (req, res, next) => {
