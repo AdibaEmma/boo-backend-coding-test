@@ -7,7 +7,7 @@ import {
   fetchProfiles,
   updateProfileById,
   deleteProfileById,
-} from "../controllers/profile.controller.js";
+} from "../controllers/profileController.js";
 import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
 
 const profiles = [
