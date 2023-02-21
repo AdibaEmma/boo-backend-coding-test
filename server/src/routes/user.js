@@ -1,16 +1,16 @@
 import { Router } from "express";
 const router = Router();
 
-import { createUserAccount } from "../../controllers/userController.js";
+import { createUserAccount } from "../controllers/userController.js";
 import {
   postComment,
   returnAllCommentsByUSer,
-} from "../../controllers/commentController.js";
+} from "../controllers/commentController.js";
 
 import {
   createUserValidationRules,
   validateUser,
-} from "../../middlewares/validators/userValidator.js";
+} from "../middlewares/validators/userValidator.js";
 
 export const userRoutes = () => {
   router.post(

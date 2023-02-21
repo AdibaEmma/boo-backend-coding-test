@@ -15,10 +15,8 @@ export const config = {
   mongo: {
     uri: MONGO_URI,
     options: {
-      useUnifiedTopology: true,
       useNewUrlParser: true,
-      autoIndex: false,
-      useFindAndModify: false,
+      useUnifiedTopology: true,
     },
   },
   server: {

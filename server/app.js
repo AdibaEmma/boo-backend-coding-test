@@ -1,41 +1,20 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import http from 'http'
-import { config } from './config/config.js';
-import Logging from './utils/logging.js'
-import { profileRoutes } from './routes/profile.js'
-import { commentRoutes } from './routes/comment.js';
-import { userRoutes } from './routes/user.js';
-
-const app = express();
-
+import App from './server.js'
+import { config } from './src/config/config.js';
+import Logging from './src/utils/logging.js'
 
 mongoose.set("strictQuery", true);
-mongoose.connect(config.mongo.uri, {
+mongoose.connect(config.mongo.uri, config.mongo.options, {
   retryWrites: true,
   w: "majority",
   autoIndex: false,
 })
 .then(() => {
   Logging.info("Database connected");
-  // set the view engine to ejs
-  app.set("view engine", "ejs");
-
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
-
-  // routes
-  app.use("/profiles", profileRoutes());
-  app.use("/comments", commentRoutes());
-  app.use("/users", userRoutes());
-
-  // start server
-   http.createServer(app).listen(config.server.port, () => {
-     Logging.info(`Server running on port ${config.server.port}`);
-     Logging.info(`Open app on http://localhost:${config.server.port}/`);
-   });
+  App.createServer()
 })
 .catch((error) => {
-    console.log(error.message)
+    Logging.error(error.message)
 });
 
