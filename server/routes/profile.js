@@ -8,6 +8,8 @@ import {
   updateProfileById,
   deleteProfileById,
 } from "../controllers/profileController.js";
+
+import { postComment } from "../controllers/commentController.js";
 import { profileValidationRules, validateProfile } from '../middlewares/validators/profile.validator.js'
 
 const profiles = [
@@ -38,6 +40,7 @@ export const profileRoutes = () => {
 
   router.delete('/profileId', deleteProfileById)
 
+  router.post('/:profileId/comments', postComment)
   return router;
 }
 

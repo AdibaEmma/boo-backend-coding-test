@@ -1,6 +1,6 @@
-import { addComment } from "../services/comments/addComment";
-import { getProfile } from "../services/profiles/getProfile"
-import { errorResponse, successResponse } from "../utils/server-response";
+import { addComment } from "../services/comments/addComment.js";
+import { getProfile } from "../services/profiles/getProfile.js"
+import { errorResponse, successResponse } from "../utils/server-response.js";
 
 export const postComment = async (req, res, next) => {
     const profileId = req.params.profileId

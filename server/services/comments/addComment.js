@@ -1,8 +1,7 @@
-import { Comment } from "../../models/Comment"
-import { Profile } from "../../models/Profile"
+import { Comment } from "../../models/Comment.js"
 
-export const addComment = async (profileId, commentInput) => {
-    const comment = new Comment({ profileId, commentInput });
+export const addComment = async (profileId, text) => {
+    const comment = new Comment({ profileId, text });
     await comment.save();
     return comment
 }
