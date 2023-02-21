@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import express from 'express';
 import App from './server.js'
 import { config } from './src/config/config.js';
 import Logging from './src/utils/logging.js'

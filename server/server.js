@@ -25,7 +25,7 @@ class App {
     this.app.use("/users", userRoutes());
 
     // start server
-    http.createServer(app).listen(config.server.port, () => {
+    http.createServer(this.app).listen(config.server.port, () => {
       Logging.info(`Server running on port ${config.server.port}`);
       Logging.info(`Open app on http://localhost:${config.server.port}/`);
     });

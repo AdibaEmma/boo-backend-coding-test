@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { createUserAccount } from "../controllers/userController.js";
+import { createUserAccount, returnUserById } from "../controllers/userController.js";
 import {
   postComment,
   returnAllCommentsByUSer,
@@ -20,7 +20,7 @@ export const userRoutes = () => {
     createUserAccount
   );
 
-  router.get("/:userId");
+  router.get("/:userId", returnUserById);
 
   router.post("/:userId/comments", postComment);
 
