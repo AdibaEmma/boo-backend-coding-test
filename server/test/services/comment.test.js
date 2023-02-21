@@ -4,6 +4,7 @@ import { Comment } from "../../src/models/Comment";
 import { addComment } from "../../src/services/comments/addComment";
 import { findComments } from "../../src/services/comments/findComments";
 import { likeComment } from "../../src/services/comments/likeComment";
+import { unlikeComment } from "../../src/services/comments/unlikeComment";
 import { jest } from "@jest/globals";
 
 const mongoServer = await MongoMemoryServer.create();
@@ -81,6 +82,40 @@ describe("Comment Service", () => {
       const result = await likeComment(comment, userId);
       expect(result).toBe(1); // expected number of likes should not change
       expect(comment.likes).toEqual([userId]);
+      expect(comment.save).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("unlikeComment", () => {
+    test("should remove user from the list of likes", async () => {
+      const comment = {
+        _id: "123",
+        likes: ["user1", "user2", "user3"],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      const userId = "user2";
+      const expectedLikes = ["user1", "user3"];
+
+      const result = await unlikeComment(comment, userId);
+
+      expect(result).toBe(expectedLikes.length);
+      expect(comment.likes).toEqual(expectedLikes);
+      expect(comment.save).toHaveBeenCalled();
+    });
+
+    test("should not remove user if not found in list of likes", async () => {
+      const comment = {
+        _id: "123",
+        likes: ["user1", "user2", "user3"],
+        save: jest.fn().mockResolvedValue(true),
+      };
+      const userId = "user4";
+      const expectedLikes = ["user1", "user2", "user3"];
+
+      const result = await unlikeComment(comment, userId);
+
+      expect(result).toBe(expectedLikes.length);
+      expect(comment.likes).toEqual(expectedLikes);
       expect(comment.save).not.toHaveBeenCalled();
     });
   });
