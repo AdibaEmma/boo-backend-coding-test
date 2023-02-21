@@ -41,6 +41,7 @@ export const profileRoutes = () => {
   router.delete('/profileId', deleteProfileById)
 
   router.post('/:profileId/comments', postComment)
+
   return router;
 }
 

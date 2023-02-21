@@ -1,4 +1,6 @@
+import { ObjectId } from "mongodb";
 import { addComment } from "../services/comments/addComment.js";
+import { getComment } from "../services/comments/getComment.js";
 import { getProfile } from "../services/profiles/getProfile.js"
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
@@ -14,6 +16,20 @@ export const postComment = async (req, res, next) => {
 
         return successResponse(res, { newComment }, "New comment added", 201)
 
+    } catch (error) {
+        return errorResponse(res, error.message)
+    }
+}
+
+export const returnCommentById = async (req, res, next) => {
+    const commentId = req.params.commentId
+    try {
+        const comment = await getComment({ _id: commentId })
+        if(!comment) {
+            return errorResponse(res, "Comment not found", 404)
+        }
+
+        return successResponse(res, { comment }, "Returned comment", 200)
     } catch (error) {
         return errorResponse(res, error.message)
     }
