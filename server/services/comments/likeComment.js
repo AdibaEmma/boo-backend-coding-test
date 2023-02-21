@@ -1,10 +1,11 @@
 export const likeComment = async (comment, userId) => {
-   const liked = comment.likes.includes(userId);
+  // check if the user has already liked the comment
+  const liked = comment.likes.includes(userId);
 
-   if (!liked) {
-     comment.likes.push(userId);
-     await comment.save();
-   }
+  if (!liked) {
+    comment.likes.push(userId);
+    await comment.save();
+  }
 
-   return comment.likes.length;
+  return comment.likes.length;
 }
