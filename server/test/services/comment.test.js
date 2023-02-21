@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
+import { Comment } from "../../src/models/Comment";
+import { addComment } from "../../src/services/comments/addComment";
+
 const mongoServer = await MongoMemoryServer.create();
 
 describe("Comment Service", () => {
@@ -12,7 +15,7 @@ describe("Comment Service", () => {
     });
   describe("addComment", () => {
     it("adds a comment to the database", async () => {
-      const userId = "123";
+      const userId = new mongoose.Types.ObjectId();
       const text = "This is a test comment";
 
       const comment = await addComment(userId, text);
