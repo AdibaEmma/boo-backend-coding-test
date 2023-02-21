@@ -7,6 +7,7 @@ import { likeComment } from "../../src/services/comments/likeComment";
 import { unlikeComment } from "../../src/services/comments/unlikeComment";
 import { voteEnneagram } from "../../src/services/comments/voteEnneagram";
 import { voteMbti } from "../../src/services/comments/voteMbti";
+import { voteZodiac } from "../../src/services/comments/voteZodiac";
 import { jest } from "@jest/globals";
 
 const mongoServer = await MongoMemoryServer.create();
@@ -151,8 +152,25 @@ describe("Comment Service", () => {
       const Comment = { updateOne: updateOneMock };
 
       const result = await voteMbti(mockFilter, mockMbtiInput, mockOptions);
-      
+
       expect(result).toBe(mockUpdateResult.acknowledged);
+    });
+  });
+
+  describe("voteZodiac", () => {
+    // Mock data
+    const filter = { _id: new mongoose.Types.ObjectId() };
+    const zodiacInput = "Leo";
+    const options = {};
+
+    // Mock the updateOne function
+    const updateOne = jest.fn(() => ({ acknowledged: true }));
+    jest.mock("mongoose", () => ({ updateOne }));
+
+    it("updates comment with zodiac vote", async () => {
+      const acknowledged = await voteZodiac(filter, zodiacInput, options);
+
+      expect(acknowledged).toBe(true);
     });
   });
 });
