@@ -6,6 +6,7 @@ import { findComments } from "../../src/services/comments/findComments";
 import { likeComment } from "../../src/services/comments/likeComment";
 import { unlikeComment } from "../../src/services/comments/unlikeComment";
 import { voteEnneagram } from "../../src/services/comments/voteEnneagram";
+import { voteMbti } from "../../src/services/comments/voteMbti";
 import { jest } from "@jest/globals";
 
 const mongoServer = await MongoMemoryServer.create();
@@ -132,6 +133,26 @@ describe("Comment Service", () => {
       const result = await voteEnneagram(filter, enneagramInput);
 
       expect(result).toBe(true);
+    });
+  });
+
+  describe("voteMbti", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should update a comment with a new MBTI vote", async () => {
+      const mockFilter = { _id: new mongoose.Types.ObjectId() };
+      const mockMbtiInput = "INFP";
+      const mockOptions = { new: true };
+      const mockUpdateResult = { acknowledged: true };
+
+      const updateOneMock = jest.fn().mockResolvedValue(mockUpdateResult);
+      const Comment = { updateOne: updateOneMock };
+
+      const result = await voteMbti(mockFilter, mockMbtiInput, mockOptions);
+      
+      expect(result).toBe(mockUpdateResult.acknowledged);
     });
   });
 });
