@@ -5,18 +5,19 @@ import { addComment } from "../../src/services/comments/addComment";
 import { findComments } from "../../src/services/comments/findComments";
 import { likeComment } from "../../src/services/comments/likeComment";
 import { unlikeComment } from "../../src/services/comments/unlikeComment";
+import { voteEnneagram } from "../../src/services/comments/voteEnneagram";
 import { jest } from "@jest/globals";
 
 const mongoServer = await MongoMemoryServer.create();
 
 describe("Comment Service", () => {
-    beforeAll(async function () {
-      await mongoose.connect(mongoServer.getUri(), { dbName: "comments" });
-    });
+  beforeAll(async function () {
+    await mongoose.connect(mongoServer.getUri(), { dbName: "comments" });
+  });
 
-    afterAll(async function () {
-      await mongoose.disconnect();
-    });
+  afterAll(async function () {
+    await mongoose.disconnect();
+  });
   describe("addComment", () => {
     it("adds a comment to the database", async () => {
       const userId = new mongoose.Types.ObjectId();
@@ -31,11 +32,11 @@ describe("Comment Service", () => {
   });
 
   describe("findComments", () => {
-   it("returns an array of comments sorted by createdAt in descending order", async () => {
-    const userId = new mongoose.Types.ObjectId();
-    const text = "This is a test comment";
+    it("returns an array of comments sorted by createdAt in descending order", async () => {
+      const userId = new mongoose.Types.ObjectId();
+      const text = "This is a test comment";
 
-    const comment = await addComment(userId, text);
+      const comment = await addComment(userId, text);
 
       const filterQuery = { userId };
       const sortBy = "createdAt";
@@ -56,7 +57,7 @@ describe("Comment Service", () => {
 
   describe("likeComment", () => {
     let comment;
-    const userId = new mongoose.Types.ObjectId();;
+    const userId = new mongoose.Types.ObjectId();
 
     beforeEach(() => {
       // create a mock comment object with empty likes array
@@ -117,6 +118,20 @@ describe("Comment Service", () => {
       expect(result).toBe(expectedLikes.length);
       expect(comment.likes).toEqual(expectedLikes);
       expect(comment.save).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("voteEnneagram", () => {
+    it("should update the enneagram vote in the comment", async () => {
+      const filter = { _id: new mongoose.Types.ObjectId() };
+      const enneagramInput = "2w3";
+
+      const updateOneMock = jest.fn().mockResolvedValue({ acknowledged: true });
+      const Comment = { updateOne: updateOneMock };
+
+      const result = await voteEnneagram(filter, enneagramInput);
+
+      expect(result).toBe(true);
     });
   });
 });
