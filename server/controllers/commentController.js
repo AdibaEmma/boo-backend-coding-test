@@ -11,7 +11,7 @@ export const postComment = async (req, res, next) => {
     try {
         const user = await getUser({ _id: userId });
         if(!user) {
-            return errorResponse(res, "Profile not found", 404)
+            return errorResponse(res, "User not found", 404)
         }
         const newComment = await addComment(user._id, text)
 
