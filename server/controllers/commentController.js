@@ -4,6 +4,7 @@ import { findComments } from "../services/comments/findComments.js";
 import { getComment } from "../services/comments/getComment.js";
 import { likeComment } from "../services/comments/likeComment.js";
 import { unlikeComment } from "../services/comments/unlikeComment.js";
+import { voteMbti } from "../services/comments/voteMbti.js";
 import { getUser } from "../services/users/getUser.js";
 import { errorResponse, successResponse } from "../utils/server-response.js";
 
@@ -92,5 +93,25 @@ export const unlikeAComment = async (req, res, next) => {
       return successResponse(res, { likesCount }, "Comment unliked", 200);
     } catch (error) {
       return errorResponse(res, error.message);
+    }
+}
+
+export const voteCommentMbti = async (req, res, next) => {
+    const commentId = req.params.commentId;
+    const { commentMbti } = req.body;
+    try {
+        const comment = await getComment({ _id: commentId });
+      if (!comment) {
+        return errorResponse(res, "Comment not found", 404);
+      }
+
+      const mbtiVoteCasted = await voteMbti({ _id: commentId }, commentMbti)
+      if(!mbtiVoteCasted) {
+        return errorResponse(res, "Could not cast vote")
+      }
+
+      return successResponse(res, { }, "Comment mbti vote updated")
+    } catch (error) {
+        return errorResponse(res, error.message);
     }
 }
