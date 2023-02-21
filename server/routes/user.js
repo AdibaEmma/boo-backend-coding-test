@@ -1,9 +1,16 @@
 import { Router } from "express";
 const router = Router();
 
-import { createUser } from "../controllers/userController.js";
+import { createUserAccount } from "../controllers/userController.js";
+import {
+  postComment,
+  returnAllCommentsByUSer,
+} from "../controllers/commentController.js";
+
+import { createUserValidationRules, validateUser } from "../middlewares/validators/userValidator.js";
+
 export const userRoutes = () => {
-  router.post("/", createUser);
+  router.post("/", createUserValidationRules(), validateUser, createUserAccount);
 
   router.get("/:userId", );
 

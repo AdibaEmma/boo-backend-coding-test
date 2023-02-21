@@ -9,7 +9,6 @@ import {
   deleteProfileById,
 } from "../controllers/profileController.js";
 
-import { postComment, returnAllCommentsByUSer } from "../controllers/commentController.js";
 import { profileValidationRules, validateProfile } from '../middlewares/validators/profileValidator.js'
 
 const profiles = [
@@ -39,10 +38,6 @@ export const profileRoutes = () => {
   router.patch('/:profileId', updateProfileById)
 
   router.delete('/profileId', deleteProfileById)
-
-  router.post('/:profileId/comments', postComment)
-
-  router.get('/:profileId/comments', returnAllCommentsByUSer)
 
   return router;
 }

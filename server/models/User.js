@@ -22,7 +22,7 @@ const userSchema = new Schema(
     },
     birthdate: {
       type: Date,
-    },
+    }
   },
   {
     timestamps: true,
@@ -31,13 +31,13 @@ const userSchema = new Schema(
 
 userSchema.index({ email: 1 });
 
-userSchema.virtual("fullName").get(function (this) {
+userSchema.virtual("fullName").get(function () {
   return `${
     this.firstName
   } ${this.otherNames ? this.otherNames : ""} ${this.lastName}`;
 });
 
-userSchema.virtual("age").get(function (this) {
+userSchema.virtual("age").get(function () {
   return Math.floor(
     (Date.now() - this.birthdate.getTime()) / (1000 * 3600 * 24 * 365)
   );
