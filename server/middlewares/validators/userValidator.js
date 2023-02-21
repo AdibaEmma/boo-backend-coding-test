@@ -1,4 +1,5 @@
 import { body, validationResult } from "express-validator";
+import { User } from "../../models/User.js";
 
 export const createUserValidationRules = () => {
   return [
@@ -32,10 +33,17 @@ export const createUserValidationRules = () => {
         });
       }),
     body("birthdate")
-      .trim()
-      .isISO8601()
-      .toDate()
-      .withMessage("Must be a valid date"),
+      .isDate({ format: 'YYYY-MM-DD' })
+  .withMessage('Invalid date format. Please use YYYY-MM-DD format.')
+  .custom((value, { req }) => {
+    // Check if user is at least 18 years old
+    const birthdate = new Date(value);
+    const age = Math.floor((new Date() - birthdate) / (1000 * 3600 * 24 * 365));
+    if (age < 18) {
+      throw new Error('You must be at least 18 years old to sign up.');
+    }
+    return true;
+  })
   ];
 };
 
